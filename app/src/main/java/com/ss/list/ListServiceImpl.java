@@ -24,6 +24,7 @@ public class ListServiceImpl implements ListServiceApi {
     String URL = "https://gist.githubusercontent.com/maclir/f715d78b49c3b4b3b77f/raw/8854ab2fe4cbe2a5919cea97d71b714ae5a4838d/items.json";
     private Call call;
 
+
     @Override
     public void getList(final ListServiceCallback callback) {
         OkHttpClient client = new OkHttpClient();

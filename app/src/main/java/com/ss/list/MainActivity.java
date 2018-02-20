@@ -1,25 +1,41 @@
 package com.ss.list;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.login.Login;
+import com.login.LoginModule;
+
 import java.util.List;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
     private ListView mListView;
     private ProgressBar mProgress;
-    private ListPresenter mPresenter;
     private TextView mEmptyText;
+
+    @Inject Login login;
+    @Inject ListServiceApi listServiceApi;
+    @Inject ListPresenter mPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DaggerMainComponent.builder().listPresenterModule().loginModule(new LoginModule()).build().inject(this);
+        //checkLogin();
+        initView();
+    }
+
+    private void initView() {
         setContentView(R.layout.activity_main);
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
@@ -33,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 getSupportFragmentManager().beginTransaction().add(R.id.mainLayout, DetailsFragments.newInstance(item), "DETAIL").addToBackStack(null).commit();
             }
         });
-
-        mPresenter = new ListPresenterImpl(this);
     }
 
     @Override

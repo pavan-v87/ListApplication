@@ -1,0 +1,3 @@
+[submodule "LoginService"]
+	path = LoginService
+	url = https://github.com/pavan-v87/LoginService.git
